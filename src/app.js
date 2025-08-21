@@ -6,7 +6,7 @@ const server = http.createServer((request, response) => {
   const parsedUrl = url.parse(request.url, true);
   const query = parsedUrl.query;
 
-  if (parsedUrl.pathname === "/users") {
+  if ("users" in query) {
     response.writeHead(200, { "Content-Type": "application/json" });
     response.end(`${getUsers()}`);
     return;
