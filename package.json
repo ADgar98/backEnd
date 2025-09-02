@@ -8,8 +8,21 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "nodemon": "^3.1.10"
-  }
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "mongoose": "^8.18.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ADgar98/backEnd.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ADgar98/backEnd/issues"
+  },
+  "homepage": "https://github.com/ADgar98/backEnd#readme",
+  "description": ""
 }
