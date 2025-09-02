@@ -1,6 +1,7 @@
-const { request, response } = require("express");
+
 const User = require('../models/user')
 const getUsers = (request, response) => {
+User.find({}).then((users) => {response.send(users)})
 
 }
 
