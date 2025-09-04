@@ -1,26 +1,35 @@
-const http = require("http");
-const url = require('url');
+const mongoose = require("mongoose");
+const express = require("express");
+const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
+const userRouters = require("./routes/users");
+const bookRouters = require('./routes/books')
+const originalUrl = require('./middlewares/originalUrl')
 
-const server = http.createServer((request, response) => {
-    const parsedUrl = url.parse(request.url, true);
-    const query = parsedUrl.query;
+dotenv.config();
 
-    if ('hello' in query) {
-        if (query.hello && query.hello.trim() !== '') {
-            response.writeHead(200, { 'Content-Type': 'text/plain' });
-            response.end(`Hello, ${query.hello}.`);
-        } else {
-            response.writeHead(400, { 'Content-Type': 'text/plain' });
-            response.end('Enter a name');
-        }
-        return; 
-    }
-    
-    
-    response.writeHead(200, { "Content-Type": "text/plain" });
-    response.end("Hello world");
+const app = express();
+app.use(bodyParser.json());
+
+mongoose.connect("mongodb://localhost:27017/backend", {
+useNewUrlParser: true,
+useUnifiedTopology: true,
+})
+.then(() => {
+console.log("✅ Connected to MongoDB");
+})
+.catch((error) => {
+console.error("❌ MongoDB connection error:", error.message);
 });
 
-server.listen(3003, '127.0.0.1', () => {
-    console.log("Сервер запущен на http://127.0.0.1:3003");
+const { PORT = 3003, API_URL = " http://127.0.0.1 " } = process.env;
+
+
+
+app.use(userRouters);
+app.use(bookRouters)
+app.use(originalUrl)
+
+app.listen(PORT, () => {
+console.log(`сервер запущен по адресу ${API_URL}:${PORT}`);
 });
